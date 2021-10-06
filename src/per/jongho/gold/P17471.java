@@ -43,7 +43,6 @@ public class P17471 {
             System.out.println(min);
         }
     }
-
     static void makeCombination(boolean choose, int index, int N) {
         if (index == N) {
             for (int i = 1; i <= N; i++) {
