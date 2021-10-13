@@ -14,8 +14,8 @@ public class InstanceCreateTest {
         Date endTime = new Date();
 
 // Time Check
-        long lTime = endTime.getTime() - startTime.getTime();
-        System.out.println("TIME : " + lTime + "(ms)");
+        long time = endTime.getTime() - startTime.getTime();
+        System.out.println("TIME : " + time + "(ms)");
 
     }
 
