@@ -21,7 +21,7 @@ public class P20056 {
         int N = Integer.parseInt(info.nextToken());//격자의 크기
         int M = Integer.parseInt(info.nextToken());//파이어볼의 개수
         int K = Integer.parseInt(info.nextToken());//이동 명령 횟수
-        
+
 
         while (M-- > 0) {
             StringTokenizer fireballInfo = new StringTokenizer(br.readLine());
@@ -43,22 +43,21 @@ public class P20056 {
 
     static void moveFireball(int N) {
         for (Fireball fireball : fireballs) {
-            for (int i = 0; i < fireball.speed; i++) {
-                int X = fireball.x + dxdy[fireball.direction][0];
-                int Y = fireball.y + dxdy[fireball.direction][1];
-                if (X > N) X = 1;
-                else if (X == 0) X = N;
-                if (Y > N) Y = 1;
-                else if (Y == 0) Y = N;
-                fireball.x = X;
-                fireball.y = Y;
-            }
-            if (hashMap.containsKey("" + fireball.x + fireball.y)) {
-                hashMap.get("" + fireball.x + fireball.y).add(fireball);
+            int speed = fireball.speed % N;
+            int X = fireball.x + (dxdy[fireball.direction][0] * speed);
+            int Y = fireball.y + (dxdy[fireball.direction][1] * speed);
+            if (X > N) X = X - N;
+            else if (X <= 0) X = N + X;
+            if (Y > N) Y = Y - N;
+            else if (Y <= 0) Y = N + Y;
+            fireball.x = X;
+            fireball.y = Y;
+            if (hashMap.containsKey(fireball.x + " " + fireball.y)) {
+                hashMap.get(fireball.x + " " + fireball.y).add(fireball);
             } else {
                 ArrayList<Fireball> fireballList = new ArrayList<>();
                 fireballList.add(fireball);
-                hashMap.put("" + fireball.x + fireball.y, fireballList);
+                hashMap.put(fireball.x + " " + fireball.y, fireballList);
             }
         }
     }
