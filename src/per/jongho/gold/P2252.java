@@ -40,18 +40,23 @@ public class P2252 {
     static void topologicalSort(int N) {
         Queue<Integer> queue = new LinkedList<>();
         StringBuilder sb = new StringBuilder();
+        //진입 차수가 0인 모든 정점을 큐에 삽입한다.
         for (int i = 1; i <= N; i++) {
             if (degree[i] == 0) {
                 queue.add(i);
             }
         }
-
+        //큐가 빌 때까지
         while (!queue.isEmpty()) {
             int index = queue.poll();
+            //위상 순서를 스트링 빌더에 추가한다.
             sb.append(index).append(" ");
+            //index번 정점에 간선이 존재할 경우
             if (null != adjacentList[index]) {
                 for (int to : adjacentList[index]) {
+                    //간선의 도착점의 차수를 줄인다.
                     degree[to]--;
+                    //간선 도착점의 차수가 0이라면, 큐에 삽입한다.
                     if (degree[to] == 0) {
                         queue.add(to);
                     }
