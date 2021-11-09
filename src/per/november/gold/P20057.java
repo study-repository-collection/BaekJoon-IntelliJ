@@ -14,7 +14,7 @@ public class P20057 {
     static Direction tornadoDirection = Direction.WEST;
     static final int[] ratio = {1, 1, 2, 2, 5, 7, 7, 10, 10, 0};
     static final int[][] TORNADO_TO_LEFT = {{1, 1}, {1, -1}, {0, -2}, {0, 2}, {-2, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {-1, 0}};
-    static final int[][] TORNADO_TO_RIGHT = {{-1, -1}, {-1, 1}, {0, -2}, {0, 2}, {2, 0}, {0, -1}, {0, 1}, {1, -1}, {1, -1}, {1, 0}};
+    static final int[][] TORNADO_TO_RIGHT = {{-1, -1}, {-1, 1}, {0, -2}, {0, 2}, {2, 0}, {0, -1}, {0, 1}, {1, -1}, {1, 1}, {1, 0}};
     static final int[][] TORNADO_TO_TOP = {{-1, 1}, {1, 1}, {-2, 0}, {2, 0}, {0, -2}, {-1, 0}, {1, 0}, {-1, -1}, {1, -1}, {0, -1}};
     static final int[][] TORNADO_TO_BOTTOM = {{-1, -1}, {1, -1}, {-2, 0}, {2, 0}, {0, 2}, {-1, 0}, {1, 0}, {-1, 1}, {1, 1}, {0, 1}};
 
