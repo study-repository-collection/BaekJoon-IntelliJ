@@ -22,30 +22,30 @@ public class P2036 {
             int a = Integer.parseInt(br.readLine());
             if (a > 0) {
                 positiveArrayList.add(a);
-            } else if (a < 0) {
+            } else {
                 negativeArrayList.add(a);
             }
         }
         System.out.println(solution());
     }
 
-    public static long solution() {
+    static long solution() {
         long sum = 0;
         while (!positiveArrayList.isEmpty()) {
             int temp1 = positiveArrayList.poll();
-            int temp2 = 0;
-            if (!positiveArrayList.isEmpty()) {
-                temp2 = positiveArrayList.poll();
+            if (temp1 == 1) {
+                sum += temp1;
+            } else if (!positiveArrayList.isEmpty()) {
+                int temp2 = positiveArrayList.poll();
+                sum += Math.max((long) temp1 * temp2, (long) temp1 + temp2);
+            } else {
+                sum += temp1;
             }
-            sum += Math.max((long) temp1 * temp2, (long) temp1 + temp2);
         }
         while (!negativeArrayList.isEmpty()) {
             int temp1 = negativeArrayList.poll();
-            int temp2 = 0;
             if (!negativeArrayList.isEmpty()) {
-                temp2 = negativeArrayList.poll();
-            }
-            if (temp2 != 0) {
+                int temp2 = negativeArrayList.poll();
                 sum += (long) temp1 * temp2;
             } else {
                 sum += temp1;
