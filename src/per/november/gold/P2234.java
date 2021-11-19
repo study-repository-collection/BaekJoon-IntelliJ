@@ -64,6 +64,7 @@ public class P2234 {
                 if ((map[i][j] & 1) == 1 && j - 1 >= 0 && size[i][j].x != size[i][j - 1].x) {
                     max = Math.max(size[i][j].y + size[i][j - 1].y, max);
                 }
+
             }
         }
         return max;
