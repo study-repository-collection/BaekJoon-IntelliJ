@@ -25,29 +25,60 @@ public class P1207 {
             StringTokenizer input = new StringTokenizer(br.readLine());
             int N = Integer.parseInt(input.nextToken());
             int M = Integer.parseInt(input.nextToken());
+            int initialX = 0, initialY = 0;
             for (int y = 0; y < N; y++) {
                 String blockInfo = br.readLine();
                 for (int x = 0; x < M; x++) {
-                    if (blockInfo.charAt(x) == '#') {
-                        blocks[i].add(new Point(x, y));
+                    if (blocks[i].isEmpty() && blockInfo.charAt(x) == '#') {
+                        blocks[i].add(new Point(0, 0));
+                        initialY = y;
+                        initialX = x;
+                    } else if (blockInfo.charAt(x) == '#') {
+                        blocks[i].add(new Point(x - initialX, y - initialY));
                     }
                 }
             }
         }
-
-        solution(L);
-    }
-
-    static void solution(int L) {
-        for (int i = 0; i < L; i++) {
-            lineFill = false;
-            lineFill(i, 1, L);
-        }
-        if (isFill(L)) {
-            printAnswer(L);
-        } else {
+        solution(L, 0, 0);
+        if (!isFind) {
             System.out.println("gg");
         }
+    }
+
+    static boolean isFind = false;
+
+    static void solution(int L, int line, int x) {
+        if (isFind) return;
+        if (line == L) {
+            if (isFill(L)) {
+                isFind = true;
+                printAnswer(L);
+            }
+            return;
+        }
+        if (lineFill(line, L)) {
+            solution(L, line + 1, 0);
+        }
+        for (int i = x; i < L; i++) {
+            for (int j = 1; j <= 5; j++) {
+                if (!use[j] && map[line][i] == 0 && canAttach(blocks[j], i, line, L)) {
+                    use[j] = true;
+                    attach(i, line, j);
+                    solution(L, line, i + 1);
+                    use[j] = false;
+                    detach(i, line, j);
+                }
+            }
+        }
+    }
+
+    static boolean lineFill(int line, int L) {
+        for (int i = 0; i < L; i++) {
+            if (map[line][i] == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static boolean isFill(int L) {
@@ -58,46 +89,14 @@ public class P1207 {
                 }
             }
         }
-        return true;
-    }
-
-    static boolean lineFill = false;
-
-    static void lineFill(int line, int number, int L) {
-        if (number == 6) return;
-        for (int i = 0; i < L; i++) {
-            if (map[line][i] == 0) {
-                if (!use[number] && canAttach(blocks[number], i, line, L)) {
-                    use[number] = true;
-                    attach(i, line, number);
-                    if (lineFilled(line, L)) {
-                        lineFill = true;
-                        return;
-                    }
-                    if (lineFill) {
-                        return;
-                    }
-                    lineFill(line, number + 1, L);
-                    detach(i, line, number);
-                    use[number] = false;
-                } else {
-                    lineFill(line, number + 1, L);
-                }
-            }
-        }
-        if (!lineFill) {
-            lineFill(line, number + 1, L);
-        }
-    }
-
-    static boolean lineFilled(int line, int L) {
-        for (int i = 0; i < L; i++) {
-            if (map[line][i] == 0) {
+        for (int i = 1; i <= 5; i++) {
+            if (!use[i]) {
                 return false;
             }
         }
         return true;
     }
+
 
     static void attach(int x, int y, int number) {
         ArrayList<Point> block = blocks[number];
@@ -144,5 +143,4 @@ public class P1207 {
         }
         return true;
     }
-
 }
