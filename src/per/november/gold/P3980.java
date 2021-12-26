@@ -25,7 +25,7 @@ public class P3980 {
             solution(0, 0, new boolean[11]);
             sb.append(max).append("\n");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 
     static void solution(int index, int score, boolean[] use) {
