@@ -14,9 +14,9 @@ public class P1946 {
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         StringBuilder sb = new StringBuilder();
         int T = Integer.parseInt(br.readLine());
+        int[] sequence = new int[100001];
         while (T-- > 0) {
             int N = Integer.parseInt(br.readLine());
-            int[] sequence = new int[N + 1];
             for (int i = 1; i <= N; i++) {
                 StringTokenizer info = new StringTokenizer(br.readLine());
                 sequence[Integer.parseInt(info.nextToken())] = Integer.parseInt(info.nextToken());
