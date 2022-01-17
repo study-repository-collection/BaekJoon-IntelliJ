@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import static java.lang.System.in;
@@ -11,14 +14,16 @@ import static java.lang.System.in;
 public class P20055 {
 
     static int[] durability;
+    static long beforeMemory;
 
     public static void main(String[] args) throws IOException {
+        System.gc();
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken()); //컨베이어벨트 칸의 개수
         int K = Integer.parseInt(st.nextToken()); //내구도가 0인 칸의 개수
-
+        beforeMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         StringTokenizer durabilityInfo = new StringTokenizer(br.readLine());
         durability = new int[2 * N + 1];
         for (int i = 1; i <= 2 * N; i++) {
@@ -47,6 +52,9 @@ public class P20055 {
             zeroCount += moveRobot(disembarkPosition, robotExist, N);
             zeroCount += board(boardPosition, robotExist);
         }
+        System.gc();
+        long after = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        System.out.println((beforeMemory - after) / 1024 / 1024 + "MB");
         return ret;
     }
 
@@ -66,12 +74,9 @@ public class P20055 {
 
     static int moveRobot(int disembarkPosition, boolean[] robotExist, int N) {
         int zeroCount = 0;
-        //내리는 위치 바로 이전부터 역순으로 로봇을 이동시킨다.
         for (int i = 0, currentPosition = disembarkPosition == 1 ? 2 * N : disembarkPosition - 1; i < N - 2; i++) {
-            //로봇이 존재할 때만 이동시킴
             if (robotExist[currentPosition]) {
                 int nextPosition = currentPosition == 2 * N ? 1 : currentPosition + 1;
-                //만약 다음 컨베이어의 내구도가 0보다 크고 로봇이 존재하지 않을 때만 이동
                 if (durability[nextPosition] > 0 && !robotExist[nextPosition]) {
                     robotExist[currentPosition] = false;
                     durability[nextPosition]--;
@@ -83,10 +88,10 @@ public class P20055 {
                     }
                 }
             }
-            //탐색 위치를 이동
             currentPosition = currentPosition == 1 ? 2 * N : currentPosition - 1;
         }
         return zeroCount;
     }
+
 
 }
